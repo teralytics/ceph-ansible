@@ -223,3 +223,31 @@
     owner: "root"
     group: "root"
     mode: "0755"
+
+- name: stop nfs server service on red hat
+  systemd:
+    name: nfs-server
+    state: stopped
+    enabled: no
+  ignore_errors: true
+  when:
+    - ansible_os_family == 'RedHat'
+
+- name: stop nfs server service on suse
+  systemd:
+    name: nfsserver
+    state: stopped
+    enabled: no
+  ignore_errors: true
+  when:
+    - ansible_os_family == 'Suse'
+      
+- name: stop nfs nfs server service on debian
+  systemd:
+    name: nfs-kernel-server
+    state: stopped
+    enabled: no
+  ignore_errors: true
+  when:
+    - ansible_os_family == 'Debian'
+
