@@ -1,9 +1,18 @@
 ---
 - name: create filesystem pools
-  command: "{{ docker_exec_cmd }} ceph --cluster {{ cluster }} osd pool create {{ item.name }} {{ item.pgs }}"
+  command: >
+    {{ docker_exec_cmd }} --cluster {{ cluster }}
+    osd pool create {{ item.name }}
+    {{ item.get('pg_num', hostvars[groups[mon_group_name][0]]['osd_pool_default_pg_num']) }}
+    {{ item.pgp_num | default(item.pg_num) }}
+    {{ item.rule_name | default("replicated_rule") }}
+    {{ item.type | default("replicated") }}
+    {%- if item.type | default("replicated") == 'erasure' and item.erasure_profile != '' %}
+    {{ item.erasure_profile }}
+    {%- endif %}
+    {{ item.expected_num_objects | default('') }}
   changed_when: false
-  with_items:
-    - "{{ cephfs_pools }}"
+  with_items: "{{ cephfs_pools }}"
 
 - name: check if ceph filesystem already exists
   command: "{{docker_exec_cmd }} ceph --cluster {{ cluster }} fs get {{ cephfs }}"

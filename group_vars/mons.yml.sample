@@ -45,8 +45,20 @@ dummy:
 #cephfs_metadata: cephfs_metadata # name of the metadata pool for a given filesystem
 
 #cephfs_pools:
-#  - { name: "{{ cephfs_data }}", pgs: "" }
-#  - { name: "{{ cephfs_metadata }}", pgs: "" }
+#  - name: "{{ cephfs_data }}"
+#    pg_num: "{{ osd_pool_default_pg_num }}"
+#    pgp_num: "{{ osd_pool_default_pg_num }}"
+#    rule_name: "replicated_rule"
+#    type: "replicated"
+#    erasure_profile: ""
+#    expected_num_objects: ""
+#  - name: "{{ cephfs_metadata }}"
+#    pg_num: "{{ osd_pool_default_pg_num }}"
+#    pgp_num: "{{ osd_pool_default_pg_num }}"
+#    rule_name: "replicated_rule"
+#    type: "replicated"
+#    erasure_profile: ""
+#    expected_num_objects: ""
 
 
 ###############
