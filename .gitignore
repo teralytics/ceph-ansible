@@ -18,4 +18,3 @@ group_vars/*.yml
 .tox
 ceph-ansible.spec
 *.retry
-site.yml
