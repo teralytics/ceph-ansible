@@ -6,7 +6,7 @@
   register: ceph_version
 
 - name: is ceph running already?
-  command: ceph --connect-timeout 10 --cluster "{{ cluster }}" fsid
+  command: timeout 2m ceph --connect-timeout 10 --cluster "{{ cluster }}" fsid
   changed_when: false
   failed_when: false
   check_mode: no

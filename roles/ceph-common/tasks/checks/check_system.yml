@@ -2,17 +2,17 @@
 - name: fail on unsupported system
   fail:
     msg: "System not supported {{ ansible_system }}"
-  when: "ansible_system not in ['Linux']"
+  when: ansible_system not in ['Linux']
 
 - name: fail on unsupported architecture
   fail:
     msg: "Architecture not supported {{ ansible_architecture }}"
-  when: "'{{ ansible_architecture }}' not in ['x86_64', 'ppc64le', 'armv7l']"
+  when: ansible_architecture not in ['x86_64', 'ppc64le', 'armv7l']
 
 - name: fail on unsupported distribution
   fail:
     msg: "Distribution not supported {{ ansible_os_family }}"
-  when: "'{{ ansible_os_family }}' not in ['Debian', 'RedHat']"
+  when: ansible_os_family not in ['Debian', 'RedHat']
 
 - name: fail on unsupported distribution for red hat storage
   fail:
@@ -25,8 +25,8 @@
   fail:
     msg: "Distribution not supported by Ubuntu Cloud Archive: {{ ansible_distribution }}"
   when:
-    ceph_stable_uca and
-    '{{ ansible_distribution }}' not in ['Ubuntu']
+    - ceph_stable_uca
+    - ansible_distribution not in ['Ubuntu']
 
 - name: fail on unsupported ansible version
   fail:
