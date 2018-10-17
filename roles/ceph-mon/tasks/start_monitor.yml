@@ -49,7 +49,7 @@
   failed_when: false
   when:
     - use_systemd
-    - ceph_release_num.{{ ceph_release }} > ceph_release_num.hammer
+    - ceph_release_num[ceph_release] > ceph_release_num.hammer
 
 - name: start the monitor service (for or after infernalis)
   service:
@@ -59,4 +59,4 @@
   changed_when: false
   when:
     - use_systemd
-    - ceph_release_num.{{ ceph_release }} > ceph_release_num.hammer
+    - ceph_release_num[ceph_release] > ceph_release_num.hammer
