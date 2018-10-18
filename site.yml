@@ -56,11 +56,11 @@
   roles:
   - ceph-osd
 
-#- hosts: mdss
-#  gather_facts: false
-#  become: True
-#  roles:
-#  - ceph-mds
+- hosts: mdss
+  gather_facts: false
+  become: True
+  roles:
+  - ceph-mds
 
 #- hosts: rgws
 #  gather_facts: false
