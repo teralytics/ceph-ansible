@@ -93,7 +93,7 @@
   changed_when: false
   when:
     - not use_systemd
-    - ceph_release_num.{{ ceph_release }} < ceph_release_num.infernalis
+    - ceph_release_num[ceph_release] < ceph_release_num.infernalis
 
 - name: start and add that the metadata service to the init sequence (systemd after hammer)
   service:

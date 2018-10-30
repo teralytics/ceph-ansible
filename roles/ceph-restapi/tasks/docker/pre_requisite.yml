@@ -1,25 +1,23 @@
 ---
 - name: install pip and docker on ubuntu
   apt:
-    name: "{{ item }}"
-    state: present
-    update_cache: yes
-  with_items:
+    name:
     - python-pip
     - docker
     - docker.io
+    state: present
+    update_cache: yes
   when: ansible_distribution == 'Ubuntu'
   tags:
     with_pkg
 
 - name: install pip and docker on debian
   apt:
-    name: "{{ item }}"
-    state: present
-    update_cache: yes
-  with_items:
+    name:
     - python-pip
     - docker-engine
+    state: present
+    update_cache: yes
   when: ansible_distribution == 'Debian'
   tags:
     with_pkg
@@ -43,10 +41,8 @@
 
 - name: install pip on redhat
   yum:
-    name: "{{ item }}"
+    name: "python-pip"
     state: present
-  with_items:
-    - python-pip
   when:
     - ansible_os_family == 'RedHat'
     - ansible_pkg_mgr == "yum"
@@ -55,10 +51,8 @@
 
 - name: install docker-engine on redhat
   yum:
-    name: "{{ item }}"
+    name: "docker-engine"
     state: present
-  with_items:
-    - docker-engine
   when:
     - ansible_os_family == 'RedHat'
     - ansible_pkg_mgr == "yum"
@@ -69,10 +63,8 @@
 # for CentOS
 - name: install docker on redhat
   yum:
-    name: "{{ item }}"
+    name: "docker"
     state: present
-  with_items:
-    - docker
   when:
     - ansible_os_family == 'RedHat'
     - ansible_pkg_mgr == "yum"
@@ -81,11 +73,10 @@
   failed_when: false
 - name: install pip and docker on redhat
   dnf:
-    name: "{{ item }}"
-    state: present
-  with_items:
+    name:
     - python-pip
     - docker-engine
+    state: present
   when:
     - ansible_os_family == 'RedHat'
     - ansible_pkg_mgr == "dnf"

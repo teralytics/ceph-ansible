@@ -27,7 +27,7 @@
     enabled: yes
   when:
     - ansible_os_family == 'RedHat'
-    - ceph_release_num.{{ ceph_release }} < ceph_release_num.infernalis
+    - ceph_release_num[ceph_release] < ceph_release_num.infernalis
 
 - name: enable systemd unit file for rgw instance (for or after infernalis)
   command: systemctl enable ceph-radosgw@rgw.{{ ansible_hostname }}

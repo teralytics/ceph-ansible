@@ -1,11 +1,10 @@
 ---
 - name: install dependencies
   apt:
-    name: "{{ item }}"
+    name: "{{ debian_package_dependencies }}"
     state: present
     update_cache: yes
     cache_valid_time: 3600
-  with_items: "{{ debian_package_dependencies }}"
 
 - name: configure ceph apt repository
   include: debian_ceph_repository.yml
@@ -17,11 +16,10 @@
 
 - name: install ceph
   apt:
-    name: "{{ item }}"
+    name: "{{ debian_ceph_packages }}"
     update_cache: no
     state: "{{ (upgrade_ceph_packages|bool) | ternary('latest','present') }}"
     default_release: "{{ ceph_stable_release_uca | default(ansible_distribution_release) }}{{ '-backports' if ceph_origin == 'distro' and ceph_use_distro_backports else ''}}"
-  with_items: "{{ debian_ceph_packages }}"
 
 - name: install ceph-test
   apt:

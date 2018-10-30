@@ -18,9 +18,8 @@
 
 - name: install dependencies
   package:
-    name: "{{ item }}"
+    name: "{{ redhat_package_dependencies }}"
     state: present
-  with_items: "{{ redhat_package_dependencies }}"
 
 - name: install red hat storage ceph mon
   package:

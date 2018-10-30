@@ -37,11 +37,10 @@
 
 - name: install dependencies
   apt:
-    pkg: "{{ item }}"
+    pkg: "{{ debian_package_dependencies }}"
     state: present
     update_cache: yes
     cache_valid_time: 3600
-  with_items: "{{ debian_package_dependencies }}"
 
 - name: install red hat storage ceph mon
   apt:
