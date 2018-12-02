@@ -20,21 +20,14 @@ osd crush chooseleaf type = 0
 {% endif %}
 {# NOTE (leseb): the blank lines in-between are needed otherwise we won't get any line break #}
 {% if groups[mon_group_name] is defined %}
-mon initial members = {% for host in groups[mon_group_name] %}
-      {% if hostvars[host]['ansible_fqdn'] is defined and mon_use_fqdn -%}
-        {{ hostvars[host]['ansible_fqdn'] }}
-      {%- elif hostvars[host]['ansible_hostname'] is defined -%}
-        {{ hostvars[host]['ansible_hostname'] }}
-      {%- endif %}
-      {%- if not loop.last %},{% endif %}
-    {% endfor %}
+mon initial members = {% for host in groups[mon_group_name] | sort %}{{ hostvars[host]['inventory_hostname_short'] }}{% if not loop.last %},{% endif %}{% endfor %}
 {% endif %}
 
 {% if not mon_containerized_deployment and not mon_containerized_deployment_with_kv %}
 {% if monitor_address_block %}
 mon host = {% for host in groups[mon_group_name] %}{{ hostvars[host]['ansible_all_ipv4_addresses'] | ipaddr(monitor_address_block) | first }}{% if not loop.last %},{% endif %}{% endfor %}
 {% elif groups[mon_group_name] is defined %}
-mon host = {% for host in groups[mon_group_name] %}
+mon host = {% for host in groups[mon_group_name] | sort %}
              {% set address = hostvars[host]['monitor_address'] if hostvars[host]['monitor_address'] is defined else monitor_address %}
              {% set interface = hostvars[host]['monitor_interface'] if hostvars[host]['monitor_interface'] is defined else monitor_interface %}
              {% if interface != "interface" %}

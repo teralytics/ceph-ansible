@@ -23,12 +23,9 @@
   when: generate_fsid
 
 - name: "generate {{ cluster }}.conf configuration file"
-  action: config_template
-  args:
+  template:
     src: "{{ playbook_dir }}/roles/ceph-common/templates/ceph.conf.j2"
     dest: "/etc/ceph/{{ cluster }}.conf"
     owner: "root"
     group: "root"
     mode: "0644"
-    config_overrides: "{{ ceph_conf_overrides }}"
-    config_type: ini

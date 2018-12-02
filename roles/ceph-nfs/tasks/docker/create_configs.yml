@@ -25,12 +25,9 @@
   register: rgwuser
 
 - name: generate ganesha configuration file
-  action: config_template
-  args:
+  template:
     src: "{{ playbook_dir }}/roles/ceph-common/templates/ganesha.conf.j2"
     dest: /etc/ganesha/ganesha.conf
     owner: "root"
     group: "root"
     mode: "0644"
-    config_overrides: "{{ ganesha_conf_overrides }}"
-    config_type: ini

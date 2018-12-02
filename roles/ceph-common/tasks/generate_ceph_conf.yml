@@ -11,15 +11,12 @@
     - /etc/ceph/ceph.d/
 
 - name: "generate ceph configuration file: {{ cluster }}.conf"
-  action: config_template
-  args:
+  template:
     src: ceph.conf.j2
     dest: /etc/ceph/ceph.d/{{ cluster }}.conf
     owner: "{{ dir_owner }}"
     group: "{{ dir_group }}"
     mode: "{{ activate_file_mode }}"
-    config_overrides: "{{ ceph_conf_overrides }}"
-    config_type: ini
 
 - name: assemble {{ cluster }}.conf and fragments
   assemble:
