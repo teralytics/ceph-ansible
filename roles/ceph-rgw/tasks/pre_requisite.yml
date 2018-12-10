@@ -64,21 +64,6 @@
     - ansible_distribution == "Ubuntu"
     - not use_systemd
 
-- name: activate rados gateway with sysvinit
-  file:
-    path: /var/lib/ceph/radosgw/{{ cluster }}-rgw.{{ ansible_hostname }}/{{ item }}
-    state: touch
-    owner: "{{ activate_file_owner }}"
-    group: "{{ activate_file_group }}"
-    mode: "{{ activate_file_mode }}"
-  with_items:
-    - done
-    - sysvinit
-  changed_when: false
-  when:
-    - ansible_distribution != "Ubuntu"
-    - not use_systemd
-
 - name: generate rados gateway sudoers file
   template:
     src: ceph.j2

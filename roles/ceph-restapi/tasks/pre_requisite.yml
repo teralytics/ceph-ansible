@@ -29,18 +29,6 @@
   changed_when: false
   when: ansible_distribution == "Ubuntu"
 
-- name: activate ceph rest api with sysvinit
-  file:
-    path: /var/lib/ceph/restapi/{{ item }}
-    state: touch
-    owner: "{{ activate_file_owner }}"
-    group: "{{ activate_file_group }}"
-    mode: "{{ activate_file_mode }}"
-  with_items:
-    - done
-    - sysvinit
-  when: ansible_distribution != "Ubuntu"
-
 # NOTE (leseb): will uncomment this when this https://github.com/ceph/ceph/pull/4144 lands
 #- name: start and add that the Ceph REST API service to the init sequence (Ubuntu)
 #  service: >
