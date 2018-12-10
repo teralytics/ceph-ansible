@@ -57,19 +57,6 @@
   changed_when: false
   when: not use_systemd
 
-- name: activate metadata server with sysvinit
-  file:
-    path: /var/lib/ceph/mds/{{ cluster }}-{{ mds_name }}/{{ item }}
-    state: touch
-    owner: "{{ activate_file_owner }}"
-    group: "{{ activate_file_group }}"
-    mode: "{{ activate_file_mode }}"
-  with_items:
-    - done
-    - sysvinit
-  changed_when: false
-  when: not use_systemd
-
 - name: enable systemd unit file for mds instance (for or after infernalis)
   command: systemctl enable ceph-mds@{{ mds_name }}
   changed_when: false
